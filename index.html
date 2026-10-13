@@ -305,22 +305,19 @@
     padding: 10px 11px;
     font-size: 11.5px;
     color: #2B2F2C;
-    min-height: 54px;
+    line-height: 1.5;
   }
   .li-text {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    vertical-align: bottom;
-    max-width: 100%;
-    animation: liType 6s steps(44, end) infinite;
+    display: block;
+    white-space: normal;
+    animation: liType 6s ease-in-out infinite;
   }
   @keyframes liType {
-    0% { width: 0; }
-    45% { width: 100%; }
-    80% { width: 100%; }
-    95% { width: 0; }
-    100% { width: 0; }
+    0% { clip-path: inset(0 100% 0 0); }
+    45% { clip-path: inset(0 0 0 0); }
+    80% { clip-path: inset(0 0 0 0); }
+    95% { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 100% 0 0); }
   }
   .li-status {
     margin-top: 12px;
