@@ -188,6 +188,200 @@
     font-size: 10.5px;
   }
 
+  /* ---------- Systems in motion ---------- */
+  .live-systems { padding: 20px 0 48px; }
+  .mock-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .mock {
+    background: var(--bg-raised);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .mock-chrome {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .mock-chrome .cdot { width: 7px; height: 7px; border-radius: 50%; background: var(--panel-border); }
+  .mock-chrome .cdot.r { background: #C06A5A; }
+  .mock-chrome .cdot.y { background: var(--signal-dim); }
+  .mock-chrome .cdot.g { background: var(--path); }
+  .mock-chrome-label {
+    margin-left: 4px;
+    font-size: 10.5px;
+    color: var(--text-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mock-body {
+    background: #F4F1E8;
+    color: #1B1F1D;
+    padding: 16px 14px;
+    min-height: 192px;
+    position: relative;
+  }
+  .mock-caption {
+    padding: 13px 16px 16px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--panel-border);
+  }
+  .mock-caption b { color: var(--text); font-weight: 600; }
+
+  /* Signal Engine mock: scanning list, rows cycle in/out */
+  .sig-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    margin-bottom: 7px;
+    background: #fff;
+    border: 1px solid #E4DFCF;
+    border-radius: 4px;
+    font-size: 11.5px;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: sigRowCycle 7s ease-in-out infinite;
+  }
+  .sig-row .sig-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); flex-shrink: 0; }
+  .sig-row .sig-main { flex: 1; min-width: 0; }
+  .sig-row .sig-main b { display: block; font-size: 12px; color: #1B1F1D; }
+  .sig-row .sig-main span { color: #6B7268; font-size: 10.5px; }
+  .sig-row .sig-score {
+    font-weight: 600;
+    font-size: 11px;
+    color: #0D1412;
+    background: #E7D9AE;
+    padding: 2px 7px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  @keyframes sigRowCycle {
+    0% { opacity: 0; transform: translateY(6px); }
+    6% { opacity: 1; transform: translateY(0); }
+    78% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 0; transform: translateY(-6px); }
+    100% { opacity: 0; transform: translateY(-6px); }
+  }
+  .sig-scan {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 10px;
+    color: #8A6E2E;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .sig-scan .sig-scan-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #C89B3C;
+    animation: livepulse 2.4s ease-in-out infinite;
+  }
+
+  /* LinkedIn Outreach mock: profile + typing DM + accepted status */
+  .li-profile { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+  .li-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #4F7A74; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+  .li-profile b { display: block; font-size: 12.5px; color: #1B1F1D; }
+  .li-profile span { font-size: 10.5px; color: #6B7268; }
+  .li-bubble {
+    background: #fff;
+    border: 1px solid #E4DFCF;
+    border-radius: 4px;
+    padding: 10px 11px;
+    font-size: 11.5px;
+    color: #2B2F2C;
+    min-height: 54px;
+  }
+  .li-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    max-width: 100%;
+    animation: liType 6s steps(44, end) infinite;
+  }
+  @keyframes liType {
+    0% { width: 0; }
+    45% { width: 100%; }
+    80% { width: 100%; }
+    95% { width: 0; }
+    100% { width: 0; }
+  }
+  .li-status {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: #3F6B5F;
+    opacity: 0;
+    animation: liStatusIn 6s ease-in-out infinite;
+  }
+  @keyframes liStatusIn {
+    0%, 50% { opacity: 0; transform: translateY(4px); }
+    62%, 90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(4px); }
+  }
+  .li-status .check {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: #4F7A74; color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; flex-shrink: 0;
+  }
+
+  /* Content Pipeline mock: newsletter -> draft -> approved, step lights */
+  .cp-flow { display: flex; flex-direction: column; gap: 0; }
+  .cp-step {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 10px;
+    background: #fff;
+    border: 1px solid #E4DFCF;
+    border-radius: 4px;
+    font-size: 11.5px;
+    color: #1B1F1D;
+    opacity: 0.35;
+    animation: cpStepLight 6s ease-in-out infinite;
+  }
+  .cp-step .cp-icon {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #EDE7D6; color: #8A6E2E;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0;
+  }
+  .cp-step .cp-sub { display: block; font-size: 10px; color: #6B7268; }
+  .cp-arrow { text-align: center; font-size: 11px; color: #A9A094; padding: 3px 0; }
+  .cp-step.s1 { animation-delay: 0s; }
+  .cp-step.s2 { animation-delay: 2s; }
+  .cp-step.s3 { animation-delay: 4s; }
+  @keyframes cpStepLight {
+    0% { opacity: 0.35; }
+    8% { opacity: 1; }
+    30% { opacity: 1; }
+    38% { opacity: 0.35; }
+    100% { opacity: 0.35; }
+  }
+
+  @media (max-width: 860px) {
+    .mock-grid { grid-template-columns: 1fr; }
+  }
+
   /* ---------- Case studies ---------- */
   .cases {
     padding: 44px 0 20px;
@@ -283,6 +477,9 @@
     }
     .diagram-label-row { flex-wrap: wrap; gap: 6px; padding: 12px 12px 4px; }
     svg.diagram { width: 640px; max-width: none; }
+
+    .live-systems { padding: 12px 0 32px; }
+    .mock-body { min-height: 0; }
 
     .cases { padding: 32px 0 12px; }
     .partners { padding: 32px 0; }
@@ -475,6 +672,85 @@
           </animateMotion>
         </circle>
       </svg>
+    </div>
+  </div>
+</section>
+
+<section class="live-systems">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Each system, in motion</h2>
+      <span class="count">live mockups, not slides</span>
+    </div>
+
+    <div class="mock-grid">
+
+      <div class="mock">
+        <div class="mock-chrome">
+          <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+          <span class="mock-chrome-label">signal-engine · scanning</span>
+        </div>
+        <div class="mock-body">
+          <span class="sig-scan"><span class="sig-scan-dot"></span>live</span>
+          <div class="sig-row" style="animation-delay:0s">
+            <span class="sig-dot"></span>
+            <div class="sig-main"><b>Nimbus Security</b><span>Raised Series A · 2d ago</span></div>
+            <span class="sig-score">92</span>
+          </div>
+          <div class="sig-row" style="animation-delay:1.6s">
+            <span class="sig-dot"></span>
+            <div class="sig-main"><b>Vectra AI Labs</b><span>Hiring 3x AE roles</span></div>
+            <span class="sig-score">87</span>
+          </div>
+          <div class="sig-row" style="animation-delay:3.2s">
+            <span class="sig-dot"></span>
+            <div class="sig-main"><b>Hollow Point</b><span>New CISO hired · 5d ago</span></div>
+            <span class="sig-score">81</span>
+          </div>
+          <div class="sig-row" style="animation-delay:4.8s">
+            <span class="sig-dot"></span>
+            <div class="sig-main"><b>Forge Cloud</b><span>G2 review spike · security</span></div>
+            <span class="sig-score">78</span>
+          </div>
+        </div>
+        <div class="mock-caption"><b>Signal Engine</b> — scrapes funding, hiring, and intent signals across target accounts and scores each one before it reaches outreach.</div>
+      </div>
+
+      <div class="mock">
+        <div class="mock-chrome">
+          <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+          <span class="mock-chrome-label">heyreach · outbound</span>
+        </div>
+        <div class="mock-body">
+          <div class="li-profile">
+            <span class="li-avatar">JP</span>
+            <div><b>Jordan Pierce</b><span>VP Engineering · Cloudline</span></div>
+          </div>
+          <div class="li-bubble">
+            <span class="li-text">Saw Cloudline's Series B — congrats. Curious how you're handling onboarding at this pace?</span>
+          </div>
+          <div class="li-status"><span class="check">✓</span> Connection accepted · replied in 4h</div>
+        </div>
+        <div class="mock-caption"><b>LinkedIn Outreach</b> — turns each scored signal into a personalized connection and opener, sent and tracked through to reply.</div>
+      </div>
+
+      <div class="mock">
+        <div class="mock-chrome">
+          <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+          <span class="mock-chrome-label">make.com · content pipeline</span>
+        </div>
+        <div class="mock-body">
+          <div class="cp-flow">
+            <div class="cp-step s1"><span class="cp-icon">✉</span><span>Newsletter received <span class="cp-sub">parsed for post-worthy ideas</span></span></div>
+            <div class="cp-arrow">↓</div>
+            <div class="cp-step s2"><span class="cp-icon">✎</span><span>Draft generated <span class="cp-sub">LinkedIn post · 180 words</span></span></div>
+            <div class="cp-arrow">↓</div>
+            <div class="cp-step s3"><span class="cp-icon">✓</span><span>Approved by admin <span class="cp-sub">scheduled for Tuesday 9am</span></span></div>
+          </div>
+        </div>
+        <div class="mock-caption"><b>Content Pipeline</b> — drafts a post from every incoming newsletter and holds it at a human approval gate before it ever goes out.</div>
+      </div>
+
     </div>
   </div>
 </section>
