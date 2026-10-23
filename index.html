@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The GTM Engine · Mohammad H. Rahman</title>
+<meta name="description" content="Mohammad H. Rahman builds the GTM engine that runs the sales pipeline for tech, SaaS and AI startups: a signal engine, LinkedIn outreach and a weekly newsletter engine, with Claude Code as the build layer underneath.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://theotherrahman.vercel.app/">
+<meta property="og:title" content="The GTM Engine · Mohammad H. Rahman">
+<meta property="og:description" content="Signal engine, LinkedIn outreach and a weekly newsletter engine that reads a week of newsletters, finds the signal and drafts the article. Live systems, not slides.">
+<!-- TODO: no OG image asset exists yet in this repo; add og:image once one is supplied. -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The GTM Engine · Mohammad H. Rahman">
+<meta name="twitter:description" content="Signal engine, LinkedIn outreach and a weekly newsletter engine that reads a week of newsletters, finds the signal and drafts the article.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -188,6 +197,38 @@
     font-size: 10.5px;
   }
 
+  /* Newsletter Engine node: soft pulse + dashed flow on its connectors */
+  .ne-node {
+    animation: nePulse 7.5s ease-in-out infinite;
+    transform-origin: 550px 200px;
+  }
+  @keyframes nePulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(200,155,60,0)); }
+    50% { filter: drop-shadow(0 0 5px rgba(200,155,60,0.45)); }
+  }
+  .ne-badge-pill {
+    fill: none;
+    stroke: var(--signal-dim);
+    stroke-width: 1;
+  }
+  .ne-badge-text {
+    font-family: var(--mono);
+    fill: var(--signal-dim);
+  }
+  .ne-flow-path {
+    stroke-dasharray: 5 7;
+    animation: neDash 7.5s linear infinite;
+  }
+  .ne-flow-path-delay {
+    animation-delay: -3.7s;
+  }
+  @keyframes neDash {
+    to { stroke-dashoffset: -48; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flow-dot { animation: none; opacity: 0; }
+  }
+
   /* ---------- Systems in motion ---------- */
   .live-systems { padding: 20px 0 48px; }
   .mock-grid {
@@ -229,6 +270,7 @@
     min-height: 192px;
     position: relative;
   }
+  .mock-body--badged { padding-top: 32px; }
   .mock-caption {
     padding: 13px 16px 16px;
     font-size: 12.5px;
@@ -341,39 +383,51 @@
     font-size: 9px; flex-shrink: 0;
   }
 
-  /* Content Pipeline mock: newsletter -> draft -> approved, step lights */
-  .cp-flow { display: flex; flex-direction: column; gap: 0; }
-  .cp-step {
+  /* Newsletter Engine mock: weekly run stepper, steps light in sequence */
+  .ne-stepper { display: flex; flex-direction: column; gap: 6px; }
+  .ne-step {
     display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 10px;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 8px;
     background: #fff;
     border: 1px solid #E4DFCF;
     border-radius: 4px;
-    font-size: 11.5px;
+    font-size: 10.5px;
     color: #1B1F1D;
     opacity: 0.35;
-    animation: cpStepLight 6s ease-in-out infinite;
+    animation: neStepLight 10.5s ease-in-out infinite;
   }
-  .cp-step .cp-icon {
-    width: 18px; height: 18px; border-radius: 50%;
+  .ne-step .ne-ico {
+    width: 16px; height: 16px; border-radius: 50%;
     background: #EDE7D6; color: #8A6E2E;
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; flex-shrink: 0;
+    font-size: 9px; flex-shrink: 0; margin-top: 1px;
   }
-  .cp-step .cp-sub { display: block; font-size: 10px; color: #6B7268; }
-  .cp-arrow { text-align: center; font-size: 11px; color: #A9A094; padding: 3px 0; }
-  .cp-step.s1 { animation-delay: 0s; }
-  .cp-step.s2 { animation-delay: 2s; }
-  .cp-step.s3 { animation-delay: 4s; }
-  @keyframes cpStepLight {
+  .ne-step .ne-tag {
+    margin-left: 4px;
+    font-size: 9px;
+    color: #8A6E2E;
+    background: #E7D9AE;
+    padding: 1px 5px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .ne-step:nth-child(1) { animation-delay: 0s; }
+  .ne-step:nth-child(2) { animation-delay: 1.2s; }
+  .ne-step:nth-child(3) { animation-delay: 2.4s; }
+  .ne-step:nth-child(4) { animation-delay: 3.6s; }
+  .ne-step:nth-child(5) { animation-delay: 4.8s; }
+  .ne-step:nth-child(6) { animation-delay: 6.0s; }
+  .ne-step:nth-child(7) { animation-delay: 7.2s; }
+  @keyframes neStepLight {
     0% { opacity: 0.35; }
-    8% { opacity: 1; }
-    30% { opacity: 1; }
-    38% { opacity: 0.35; }
+    4% { opacity: 1; }
+    11% { opacity: 1; }
+    15% { opacity: 0.35; }
     100% { opacity: 0.35; }
   }
+  .mock--newsletter-engine .mock-body { min-height: 236px; }
 
   @media (max-width: 860px) {
     .mock-grid { grid-template-columns: 1fr; }
@@ -451,6 +505,152 @@
     .case { grid-template-columns: 1fr; gap: 8px; }
   }
 
+  /* ---------- Workflow gallery ---------- */
+  .workflow { padding: 8px 0 44px; }
+  .wf-intro {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    max-width: 62ch;
+    margin: -10px 0 22px;
+  }
+  .wf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .wf-frame {
+    margin: 0;
+    background: var(--bg-raised);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .wf-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+  }
+  .wf-trigger:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: -2px;
+  }
+  .wf-chrome {
+    display: block;
+    padding: 8px 10px;
+    font-size: 10px;
+    color: var(--text-faint);
+    border-bottom: 1px solid var(--panel-border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .wf-media {
+    display: block;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: repeating-linear-gradient(135deg, var(--bg-raised), var(--bg-raised) 10px, var(--panel) 10px, var(--panel) 20px);
+  }
+  .wf-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .wf-placeholder {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-faint);
+    text-align: center;
+    padding: 12px;
+  }
+  .wf-media.wf-missing img { display: none; }
+  .wf-media.wf-missing .wf-placeholder { display: flex; }
+  .wf-caption {
+    padding: 10px 12px 12px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+  .wf-caption b { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 860px) {
+    .wf-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Lightbox */
+  .wf-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px;
+    background: rgba(13, 20, 18, 0.92);
+  }
+  .wf-lightbox[hidden] { display: none; }
+  .wf-lb-frame {
+    position: relative;
+    max-width: min(900px, 92vw);
+    max-height: 72vh;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: repeating-linear-gradient(135deg, var(--bg-raised), var(--bg-raised) 10px, var(--panel) 10px, var(--panel) 20px);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .wf-lb-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--bg-raised);
+  }
+  .wf-lb-frame .wf-placeholder { font-size: 13px; }
+  .wf-lb-frame.wf-missing img { display: none; }
+  .wf-lb-caption {
+    color: var(--text-muted);
+    font-size: 12.5px;
+    max-width: 62ch;
+    text-align: center;
+  }
+  .wf-lb-caption b { color: var(--text); }
+  .wf-lb-close, .wf-lb-prev, .wf-lb-next {
+    position: absolute;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wf-lb-close:focus-visible, .wf-lb-prev:focus-visible, .wf-lb-next:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+  .wf-lb-close { top: 18px; right: 18px; }
+  .wf-lb-prev { left: 18px; top: 50%; transform: translateY(-50%); }
+  .wf-lb-next { right: 18px; top: 50%; transform: translateY(-50%); }
+
   @media (max-width: 560px) {
     .wrap { padding: 0 18px; }
 
@@ -479,6 +679,22 @@
     .mock-body { min-height: 0; }
 
     .cases { padding: 32px 0 12px; }
+
+    .workflow { padding: 4px 0 32px; }
+    .wf-grid {
+      display: flex;
+      grid-template-columns: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 12px;
+      margin: 0 -18px;
+      padding: 0 18px;
+    }
+    .wf-frame { flex: 0 0 82%; scroll-snap-align: start; }
+    .wf-lb-prev, .wf-lb-next { width: 32px; height: 32px; font-size: 16px; }
+    .wf-lb-frame { max-height: 50vh; }
+
     .partners { padding: 32px 0; }
     .cta { padding: 40px 0 36px; }
     .cta h2 { max-width: none; }
@@ -594,13 +810,15 @@
         <span class="live"><span class="live-dot"></span>running</span>
       </div>
 
-      <svg class="diagram" viewBox="0 0 1040 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing the Signal Engine feeding a LinkedIn outreach workflow and a content pipeline, both converging into discovery calls, with Claude Code as the build layer underneath all three.">
+      <svg class="diagram" viewBox="0 0 1040 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="gtm-diagram-title gtm-diagram-desc">
+        <title id="gtm-diagram-title">GTM engine architecture</title>
+        <desc id="gtm-diagram-desc">The Signal Engine feeds a LinkedIn outreach workflow and a weekly Newsletter Engine, both converging into discovery calls, with Claude Code as the build layer underneath all three.</desc>
 
         <!-- flow paths (drawn first, under nodes) -->
         <path id="p1" class="flow-path" d="M 195 100 C 320 100, 320 60, 445 60" />
-        <path id="p2" class="flow-path" d="M 195 100 C 320 100, 320 200, 445 200" />
+        <path id="p2" class="flow-path ne-flow-path" d="M 195 100 C 320 100, 320 200, 445 200" />
         <path id="p3" class="flow-path" d="M 655 60 C 760 60, 760 130, 845 150" />
-        <path id="p4" class="flow-path" d="M 655 200 C 760 200, 760 150, 845 170" />
+        <path id="p4" class="flow-path ne-flow-path ne-flow-path-delay" d="M 655 200 C 760 200, 760 150, 845 170" />
 
         <!-- base layer connectors (dashed, upward, styled as infrastructure) -->
         <path class="base-path" d="M 130 340 L 130 145" />
@@ -623,18 +841,20 @@
           <text class="node-metric" x="461" y="83" font-size="11.5">500+ connections / 3 wks</text>
         </g>
 
-        <!-- Node: Content pipeline -->
-        <g>
+        <!-- Node: Newsletter Engine -->
+        <g class="ne-node">
           <rect class="node-box" x="445" y="165" width="210" height="70" rx="3"/>
-          <text class="node-sub" x="461" y="186" font-size="10.5">02 · content</text>
-          <text class="node-title" x="461" y="205" font-size="14">Content Pipeline</text>
-          <text class="node-metric" x="461" y="216" font-size="10.5"><tspan x="461" dy="0">newsletter → post,</tspan><tspan x="461" dy="13">human-gated</tspan></text>
+          <rect class="ne-badge-pill" x="589" y="171" width="58" height="14" rx="7"/>
+          <text class="ne-badge-text" x="618" y="181" font-size="8" text-anchor="middle">weekly</text>
+          <text class="node-sub" x="461" y="186" font-size="10.5">03 · content</text>
+          <text class="node-title" x="461" y="205" font-size="14">Newsletter Engine</text>
+          <text class="node-metric" x="461" y="216" font-size="10.5"><tspan x="461" dy="0">newsletters → article,</tspan><tspan x="461" dy="13">human-reviewed</tspan></text>
         </g>
 
         <!-- Node: Discovery calls (end) -->
         <g>
           <rect class="node-box" x="845" y="115" width="165" height="70" rx="3"/>
-          <text class="node-sub" x="861" y="136" font-size="10.5">03 · outcome</text>
+          <text class="node-sub" x="861" y="136" font-size="10.5">04 · outcome</text>
           <text class="node-title" x="861" y="155" font-size="14">Discovery calls</text>
           <text class="node-metric" x="861" y="173" font-size="11.5">20 booked, warm</text>
         </g>
@@ -644,7 +864,7 @@
           <rect class="node-box base" x="30" y="340" width="980" height="60" rx="3"/>
           <text class="node-sub" x="46" y="362" font-size="10.5">build layer</text>
           <text class="node-title" x="46" y="382" font-size="14">Claude Code</text>
-          <text class="end-label" x="220" y="382">— writes and maintains the scrapers, the send logic, and the approval flow above</text>
+          <text class="end-label" x="220" y="382">— writes and maintains the scrapers, the send logic, and the newsletter engine above</text>
         </g>
 
         <!-- flowing particles -->
@@ -686,7 +906,7 @@
           <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
           <span class="mock-chrome-label">signal-engine · scanning</span>
         </div>
-        <div class="mock-body">
+        <div class="mock-body mock-body--badged">
           <span class="sig-scan"><span class="sig-scan-dot"></span>live</span>
           <div class="sig-row" style="animation-delay:0s">
             <span class="sig-dot"></span>
@@ -730,21 +950,24 @@
         <div class="mock-caption"><b>LinkedIn Outreach</b> — turns each scored signal into a personalized connection and opener, sent and tracked through to reply.</div>
       </div>
 
-      <div class="mock">
+      <div class="mock mock--newsletter-engine">
         <div class="mock-chrome">
           <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
-          <span class="mock-chrome-label">make.com · content pipeline</span>
+          <span class="mock-chrome-label">claude · newsletter engine</span>
         </div>
-        <div class="mock-body">
-          <div class="cp-flow">
-            <div class="cp-step s1"><span class="cp-icon">✉</span><span>Newsletter received <span class="cp-sub">parsed for post-worthy ideas</span></span></div>
-            <div class="cp-arrow">↓</div>
-            <div class="cp-step s2"><span class="cp-icon">✎</span><span>Draft generated <span class="cp-sub">LinkedIn post · 180 words</span></span></div>
-            <div class="cp-arrow">↓</div>
-            <div class="cp-step s3"><span class="cp-icon">✓</span><span>Approved by admin <span class="cp-sub">scheduled for Tuesday 9am</span></span></div>
+        <div class="mock-body mock-body--badged">
+          <span class="sig-scan"><span class="sig-scan-dot"></span>weekly</span>
+          <div class="ne-stepper">
+            <div class="ne-step"><span class="ne-ico">⏱</span><span>Thursday 8:35 IST, routine fires</span></div>
+            <div class="ne-step"><span class="ne-ico">✉</span><span>Label read: 16 issues, 10 newsletters <span class="ne-tag">first run</span></span></div>
+            <div class="ne-step"><span class="ne-ico">◇</span><span>Signal map built, angle chosen</span></div>
+            <div class="ne-step"><span class="ne-ico">⚔</span><span>Angle stress-tested</span></div>
+            <div class="ne-step"><span class="ne-ico">✎</span><span>Article drafted, about 2,000 words</span></div>
+            <div class="ne-step"><span class="ne-ico">▣</span><span>4 images generated and checked</span></div>
+            <div class="ne-step"><span class="ne-ico">✓</span><span>Draft ready, waiting for my review</span></div>
           </div>
         </div>
-        <div class="mock-caption"><b>Content Pipeline</b> — drafts a post from every incoming newsletter and holds it at a human approval gate before it ever goes out.</div>
+        <div class="mock-caption"><b>Newsletter Engine</b> reads the week's newsletters, finds the signal and drafts the article. Nothing is ever posted for me.</div>
       </div>
 
     </div>
@@ -789,19 +1012,111 @@
 
     <div class="case">
       <div>
-        <span class="tag">02 · content</span>
-        <h3>Content Pipeline, via Make.com</h3>
+        <span class="tag">03 · content</span>
+        <h3>Newsletter Engine, via Claude</h3>
       </div>
       <div class="body">
-        <p>Reads incoming newsletters and drafts LinkedIn posts automatically, routed to an admin approval step before anything goes out — content stays warm without needing to be written from scratch each time.</p>
+        <p>Every Thursday it reads a week of my GTM newsletters, maps the themes that keep recurring, picks an angle and argues against it before writing. The result is a 2,000 word article in my voice with every borrowed idea credited and every number sourced, plus four images and a note on what to double-check. It never posts. I review it and publish it myself.</p>
         <div class="metrics">
-          <div class="metric"><b>1</b>approval gate</div>
-          <div class="metric"><b>auto</b>draft generation</div>
+          <div class="metric"><b>16</b>issues read, first run</div>
+          <div class="metric"><b>10</b>newsletters</div>
+          <div class="metric"><b>4</b>images per article</div>
+          <div class="metric"><b>1</b>human gate</div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<section class="workflow">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>See the workflow</h2>
+    </div>
+    <p class="wf-intro">Six steps, start to finish — from the Thursday trigger to the draft landing in my inbox. Redacted of anything private.</p>
+
+    <div class="wf-grid" id="wf-grid">
+
+      <figure class="wf-frame" data-step="0">
+        <button type="button" class="wf-trigger" data-wf-open="0" aria-label="newsletter-engine-01-schedule-and-label.png — open screenshot, step 1: schedule and collect">
+          <span class="wf-chrome">newsletter-engine-01-schedule-and-label.png</span>
+          <span class="wf-media">
+            <img src="workflow/newsletter-engine-01-schedule-and-label.png" alt="The Thursday morning routine trigger alongside the Gmail GTM Newsletters label view" width="960" height="600" loading="lazy" decoding="async" onerror="this.closest('.wf-media').classList.add('wf-missing')">
+            <span class="wf-placeholder">screenshot coming</span>
+          </span>
+        </button>
+        <figcaption class="wf-caption"><b>Step 1</b> — schedule and collect</figcaption>
+      </figure>
+
+      <figure class="wf-frame" data-step="1">
+        <button type="button" class="wf-trigger" data-wf-open="1" aria-label="newsletter-engine-02-signal-map.png — open screenshot, step 2: find the signal">
+          <span class="wf-chrome">newsletter-engine-02-signal-map.png</span>
+          <span class="wf-media">
+            <img src="workflow/newsletter-engine-02-signal-map.png" alt="Signal map listing recurring themes, an underrated idea, a disagreement between newsletters and the chosen angle" width="960" height="600" loading="lazy" decoding="async" onerror="this.closest('.wf-media').classList.add('wf-missing')">
+            <span class="wf-placeholder">screenshot coming</span>
+          </span>
+        </button>
+        <figcaption class="wf-caption"><b>Step 2</b> — find the signal</figcaption>
+      </figure>
+
+      <figure class="wf-frame" data-step="2">
+        <button type="button" class="wf-trigger" data-wf-open="2" aria-label="newsletter-engine-03-stress-test-and-review-notes.png — open screenshot, step 3: stress-test and review notes">
+          <span class="wf-chrome">newsletter-engine-03-stress-test-and-review-notes.png</span>
+          <span class="wf-media">
+            <img src="workflow/newsletter-engine-03-stress-test-and-review-notes.png" alt="The angle argued against itself, plus review notes on unverified numbers, the weakest paragraph and assumptions" width="960" height="600" loading="lazy" decoding="async" onerror="this.closest('.wf-media').classList.add('wf-missing')">
+            <span class="wf-placeholder">screenshot coming</span>
+          </span>
+        </button>
+        <figcaption class="wf-caption"><b>Step 3</b> — stress-test and review notes</figcaption>
+      </figure>
+
+      <figure class="wf-frame" data-step="3">
+        <button type="button" class="wf-trigger" data-wf-open="3" aria-label="newsletter-engine-04-article-draft.png — open screenshot, step 4: the article draft">
+          <span class="wf-chrome">newsletter-engine-04-article-draft.png</span>
+          <span class="wf-media">
+            <img src="workflow/newsletter-engine-04-article-draft.png" alt="The drafted long-form article, with every borrowed idea credited and every number marked with its source" width="960" height="600" loading="lazy" decoding="async" onerror="this.closest('.wf-media').classList.add('wf-missing')">
+            <span class="wf-placeholder">screenshot coming</span>
+          </span>
+        </button>
+        <figcaption class="wf-caption"><b>Step 4</b> — the article draft</figcaption>
+      </figure>
+
+      <figure class="wf-frame" data-step="4">
+        <button type="button" class="wf-trigger" data-wf-open="4" aria-label="newsletter-engine-05-four-images.png — open screenshot, step 5: four images">
+          <span class="wf-chrome">newsletter-engine-05-four-images.png</span>
+          <span class="wf-media">
+            <img src="workflow/newsletter-engine-05-four-images.png" alt="The four generated images: a cover, a stat card, a framework diagram and a quote card" width="960" height="600" loading="lazy" decoding="async" onerror="this.closest('.wf-media').classList.add('wf-missing')">
+            <span class="wf-placeholder">screenshot coming</span>
+          </span>
+        </button>
+        <figcaption class="wf-caption"><b>Step 5</b> — four images</figcaption>
+      </figure>
+
+      <figure class="wf-frame" data-step="5">
+        <button type="button" class="wf-trigger" data-wf-open="5" aria-label="newsletter-engine-06-delivery.png — open screenshot, step 6: delivery">
+          <span class="wf-chrome">newsletter-engine-06-delivery.png</span>
+          <span class="wf-media">
+            <img src="workflow/newsletter-engine-06-delivery.png" alt="Delivery view showing the draft pull request, the private review page and the email notification" width="960" height="600" loading="lazy" decoding="async" onerror="this.closest('.wf-media').classList.add('wf-missing')">
+            <span class="wf-placeholder">screenshot coming</span>
+          </span>
+        </button>
+        <figcaption class="wf-caption"><b>Step 6</b> — delivery</figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<div class="wf-lightbox" id="wf-lightbox" role="dialog" aria-modal="true" aria-labelledby="wf-lb-caption" hidden>
+  <button type="button" class="wf-lb-close" id="wf-lb-close" aria-label="Close">&times;</button>
+  <button type="button" class="wf-lb-prev" id="wf-lb-prev" aria-label="Previous screenshot">&lsaquo;</button>
+  <div class="wf-lb-frame" id="wf-lb-frame">
+    <img id="wf-lb-img" src="" alt="">
+    <span class="wf-placeholder">screenshot coming</span>
+  </div>
+  <button type="button" class="wf-lb-next" id="wf-lb-next" aria-label="Next screenshot">&rsaquo;</button>
+  <p class="wf-lb-caption" id="wf-lb-caption"></p>
+</div>
 
 <section class="partners">
   <div class="wrap">
@@ -823,7 +1138,7 @@
 <section class="cta">
   <div class="wrap">
     <h2>Want the system running on your GTM instead of mine?</h2>
-    <p>Happy to walk through how the signal engine, outreach, and content pipeline would map onto your pipeline specifically.</p>
+    <p>Happy to walk through how the signal engine, outreach, and newsletter engine would map onto your pipeline specifically.</p>
     <div class="cta-buttons">
       <a class="cta-btn" href="https://calendly.com/markoholics/30min" target="_blank" rel="noopener">Book a call</a>
       <a class="cta-btn secondary" href="mailto:contact@markoholics.com?subject=Let%27s%20talk%20GTM" target="_top">Email me</a>
@@ -834,6 +1149,93 @@
 <footer class="foot">
   <div class="wrap">Mohammad H. Rahman · Building GTM engines for AI-native founders</div>
 </footer>
+
+<script>
+(function () {
+  var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-wf-open]'));
+  if (!triggers.length) return;
+
+  var lightbox = document.getElementById('wf-lightbox');
+  var frame = document.getElementById('wf-lb-frame');
+  var img = document.getElementById('wf-lb-img');
+  var caption = document.getElementById('wf-lb-caption');
+  var closeBtn = document.getElementById('wf-lb-close');
+  var prevBtn = document.getElementById('wf-lb-prev');
+  var nextBtn = document.getElementById('wf-lb-next');
+  var focusable = [closeBtn, prevBtn, nextBtn];
+  var lastFocused = null;
+  var currentIndex = 0;
+
+  function showStep(index) {
+    currentIndex = (index + triggers.length) % triggers.length;
+    var trigger = triggers[currentIndex];
+    var sourceImg = trigger.querySelector('img');
+    var figcaption = trigger.closest('.wf-frame').querySelector('figcaption');
+
+    frame.classList.remove('wf-missing');
+    img.src = sourceImg.getAttribute('src');
+    img.alt = sourceImg.getAttribute('alt');
+    caption.textContent = figcaption ? figcaption.textContent : '';
+
+    if (trigger.closest('.wf-frame').querySelector('.wf-media').classList.contains('wf-missing')) {
+      frame.classList.add('wf-missing');
+    }
+  }
+
+  function openLightbox(index) {
+    lastFocused = document.activeElement;
+    showStep(index);
+    lightbox.hidden = false;
+    closeBtn.focus();
+    document.addEventListener('keydown', onKeydown, true);
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    document.removeEventListener('keydown', onKeydown, true);
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeLightbox();
+      return;
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      showStep(currentIndex - 1);
+      return;
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      showStep(currentIndex + 1);
+      return;
+    }
+    if (e.key === 'Tab') {
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
+  triggers.forEach(function (trigger, i) {
+    trigger.addEventListener('click', function () { openLightbox(i); });
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', function () { showStep(currentIndex - 1); });
+  nextBtn.addEventListener('click', function () { showStep(currentIndex + 1); });
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+})();
+</script>
 
 </body>
 </html>
