@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The GTM Engine · Mohammad H. Rahman</title>
+<meta name="description" content="Three connected GTM workflows built with Claude: a signal engine, LinkedIn outreach, and a newsletter engine that reads the week's newsletters and drafts the article. By Mohammad H. Rahman.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The GTM Engine">
+<meta property="og:title" content="The GTM Engine · Mohammad H. Rahman">
+<meta property="og:description" content="Three connected GTM workflows built with Claude: a signal engine, LinkedIn outreach, and a newsletter engine that reads the week's newsletters and drafts the article.">
+<meta property="og:url" content="https://theotherrahman.vercel.app/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The GTM Engine · Mohammad H. Rahman">
+<meta name="twitter:description" content="Three connected GTM workflows built with Claude: a signal engine, LinkedIn outreach, and a newsletter engine that reads the week's newsletters and drafts the article.">
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -341,39 +351,82 @@
     font-size: 9px; flex-shrink: 0;
   }
 
-  /* Content Pipeline mock: newsletter -> draft -> approved, step lights */
-  .cp-flow { display: flex; flex-direction: column; gap: 0; }
-  .cp-step {
+  /* Newsletter Engine mock: seven steps light in turn, hold, then reset */
+  .ne-body { padding-top: 34px; }
+  .ne-flow { display: flex; flex-direction: column; gap: 5px; }
+  .ne-step {
     display: flex;
     align-items: center;
     gap: 9px;
-    padding: 9px 10px;
+    padding: 6px 9px;
     background: #fff;
     border: 1px solid #E4DFCF;
     border-radius: 4px;
-    font-size: 11.5px;
+    font-size: 11px;
+    line-height: 1.35;
     color: #1B1F1D;
-    opacity: 0.35;
-    animation: cpStepLight 6s ease-in-out infinite;
+    opacity: 0.3;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
   }
-  .cp-step .cp-icon {
+  .ne-step .ne-icon {
     width: 18px; height: 18px; border-radius: 50%;
     background: #EDE7D6; color: #8A6E2E;
     display: flex; align-items: center; justify-content: center;
     font-size: 10px; flex-shrink: 0;
   }
-  .cp-step .cp-sub { display: block; font-size: 10px; color: #6B7268; }
-  .cp-arrow { text-align: center; font-size: 11px; color: #A9A094; padding: 3px 0; }
-  .cp-step.s1 { animation-delay: 0s; }
-  .cp-step.s2 { animation-delay: 2s; }
-  .cp-step.s3 { animation-delay: 4s; }
-  @keyframes cpStepLight {
-    0% { opacity: 0.35; }
-    8% { opacity: 1; }
-    30% { opacity: 1; }
-    38% { opacity: 0.35; }
-    100% { opacity: 0.35; }
+  .ne-step.final .ne-icon { background: #4F7A74; color: #fff; }
+  .ne-step.s0 { animation-name: neStep0; }
+  .ne-step.s1 { animation-name: neStep1; }
+  .ne-step.s2 { animation-name: neStep2; }
+  .ne-step.s3 { animation-name: neStep3; }
+  .ne-step.s4 { animation-name: neStep4; }
+  .ne-step.s5 { animation-name: neStep5; }
+  .ne-step.s6 { animation-name: neStep6; }
+  @keyframes neStep0 { 0%, 2% { opacity: 0.3; } 4%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+  @keyframes neStep1 { 0%, 14% { opacity: 0.3; } 16%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+  @keyframes neStep2 { 0%, 26% { opacity: 0.3; } 28%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+  @keyframes neStep3 { 0%, 38% { opacity: 0.3; } 40%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+  @keyframes neStep4 { 0%, 50% { opacity: 0.3; } 52%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+  @keyframes neStep5 { 0%, 62% { opacity: 0.3; } 64%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+  @keyframes neStep6 { 0%, 74% { opacity: 0.3; } 76%, 92% { opacity: 1; } 100% { opacity: 0.3; } }
+
+  /* Architecture diagram: Newsletter Engine node pulse and connector flow, 7.5s loop */
+  .ne-node { animation: nePulse 7.5s ease-in-out 1.5s infinite; }
+  @keyframes nePulse {
+    0%, 22% { stroke: var(--panel-border); fill: var(--panel); }
+    30%, 44% { stroke: var(--signal); fill: #1C2A25; }
+    60%, 100% { stroke: var(--panel-border); fill: var(--panel); }
   }
+  .ne-dash {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  .ne-dash.in  { animation: neDrawIn 7.5s linear 1.5s infinite; }
+  .ne-dash.out { animation: neDrawOut 7.5s linear 1.5s infinite; }
+  @keyframes neDrawIn {
+    0% { stroke-dashoffset: 1; opacity: 1; }
+    28% { stroke-dashoffset: 0; opacity: 1; }
+    80% { stroke-dashoffset: 0; opacity: 0.9; }
+    92% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 1; opacity: 0; }
+  }
+  @keyframes neDrawOut {
+    0%, 32% { stroke-dashoffset: 1; opacity: 0; }
+    33% { stroke-dashoffset: 1; opacity: 1; }
+    58% { stroke-dashoffset: 0; opacity: 1; }
+    80% { stroke-dashoffset: 0; opacity: 0.9; }
+    92% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 1; opacity: 0; }
+  }
+  .ne-badge rect { fill: none; stroke: var(--signal-dim); stroke-width: 1; }
+  .ne-badge text { fill: var(--signal); letter-spacing: 0.04em; }
 
   @media (max-width: 860px) {
     .mock-grid { grid-template-columns: 1fr; }
@@ -486,6 +539,186 @@
     .cta-btn { text-align: center; }
   }
 
+  /* ---------- Workflow gallery ---------- */
+  .workflow {
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--panel-border);
+  }
+  .workflow h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+  .workflow .wf-note {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin: 0 0 18px;
+    max-width: 62ch;
+  }
+  .wf-tabs { display: none; }
+  .wf-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 2px 2px 14px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-color: var(--panel-border) transparent;
+  }
+  .wf-track:focus-visible, .wf-open:focus-visible, .wf-tab:focus-visible, .wf-lb button:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+  .wf-shot {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+    margin: 0;
+    background: var(--bg-raised);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .wf-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--panel);
+  }
+  .wf-media::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgba(200,155,60,0.08) 50%, transparent 70%);
+    background-size: 220% 100%;
+    animation: wfShimmer 2.4s ease-in-out infinite;
+  }
+  .wf-shot.is-loaded .wf-media::before, .wf-shot.is-missing .wf-media::before { display: none; }
+  @keyframes wfShimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+  .wf-open {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+    display: block;
+  }
+  .wf-open:disabled { cursor: default; }
+  .wf-open img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .wf-shot.is-missing .wf-open img { display: none; }
+  .wf-missing {
+    display: none;
+    position: absolute;
+    inset: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--panel-border);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-faint);
+    text-align: center;
+    padding: 8px;
+  }
+  .wf-shot.is-missing .wf-missing { display: flex; }
+  .wf-shot figcaption {
+    padding: 11px 14px 13px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--panel-border);
+  }
+  .wf-shot figcaption b { color: var(--text); font-weight: 600; }
+
+  .wf-tab {
+    font: inherit;
+    font-size: 12.5px;
+    text-align: left;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--panel-border);
+    border-left: 3px solid var(--panel-border);
+    border-radius: 3px;
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  .wf-tab:hover { color: var(--text); }
+  .wf-tab[aria-selected="true"] {
+    color: var(--text);
+    background: var(--panel);
+    border-left-color: var(--signal);
+  }
+
+  @media (min-width: 861px) {
+    .wf-track { display: grid; grid-template-columns: 1fr 1fr; overflow: visible; scroll-snap-type: none; padding: 0; }
+    .wf-shot { flex: none; }
+    .js .wf-viewer { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .js .wf-tabs { display: flex; flex-direction: column; gap: 6px; }
+    .js .wf-track { display: block; }
+    .js .wf-shot { display: none; }
+    .js .wf-shot.is-active { display: flex; }
+  }
+
+  .wf-lb {
+    border: 1px solid var(--panel-border);
+    background: var(--bg-raised);
+    color: var(--text);
+    padding: 0;
+    border-radius: 6px;
+    width: min(1180px, 96vw);
+    max-height: 94vh;
+    overflow: hidden;
+  }
+  .wf-lb::backdrop { background: rgba(5, 9, 8, 0.82); }
+  .wf-lb[open] { display: flex; flex-direction: column; }
+  .wf-lb-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--panel-border);
+    font-size: 12.5px;
+  }
+  .wf-lb-bar span { color: var(--text-muted); min-width: 0; }
+  .wf-lb-actions { display: flex; gap: 8px; }
+  .wf-lb button {
+    font: inherit;
+    font-size: 12.5px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 3px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .wf-lb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(94vh - 56px);
+    object-fit: contain;
+    background: var(--panel);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flow-dot, .ne-dash { display: none; }
+    .ne-node { animation: none; }
+    .ne-step[class] { animation: none; opacity: 1; }
+    .wf-media::before { animation: none; }
+  }
+
   /* ---------- Partnerships ---------- */
   .partners {
     padding: 44px 0;
@@ -594,13 +827,19 @@
         <span class="live"><span class="live-dot"></span>running</span>
       </div>
 
-      <svg class="diagram" viewBox="0 0 1040 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing the Signal Engine feeding a LinkedIn outreach workflow and a content pipeline, both converging into discovery calls, with Claude Code as the build layer underneath all three.">
+      <svg class="diagram" viewBox="0 0 1040 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arch-title arch-desc">
+        <title id="arch-title">GTM engine architecture</title>
+        <desc id="arch-desc">The Signal Engine feeds a LinkedIn outreach workflow and a weekly Newsletter Engine that drafts an article for human review. Both converge into discovery calls. Claude Code is the build layer underneath all three.</desc>
 
         <!-- flow paths (drawn first, under nodes) -->
         <path id="p1" class="flow-path" d="M 195 100 C 320 100, 320 60, 445 60" />
         <path id="p2" class="flow-path" d="M 195 100 C 320 100, 320 200, 445 200" />
         <path id="p3" class="flow-path" d="M 655 60 C 760 60, 760 130, 845 150" />
         <path id="p4" class="flow-path" d="M 655 200 C 760 200, 760 150, 845 170" />
+
+        <!-- Newsletter Engine connector flow (drawn over p2 and p4) -->
+        <path class="ne-dash in" pathLength="1" d="M 195 100 C 320 100, 320 200, 445 200" />
+        <path class="ne-dash out" pathLength="1" d="M 655 200 C 760 200, 760 150, 845 170" />
 
         <!-- base layer connectors (dashed, upward, styled as infrastructure) -->
         <path class="base-path" d="M 130 340 L 130 145" />
@@ -623,18 +862,22 @@
           <text class="node-metric" x="461" y="83" font-size="11.5">500+ connections / 3 wks</text>
         </g>
 
-        <!-- Node: Content pipeline -->
+        <!-- Node: Newsletter Engine -->
         <g>
-          <rect class="node-box" x="445" y="165" width="210" height="70" rx="3"/>
-          <text class="node-sub" x="461" y="186" font-size="10.5">02 · content</text>
-          <text class="node-title" x="461" y="205" font-size="14">Content Pipeline</text>
-          <text class="node-metric" x="461" y="216" font-size="10.5"><tspan x="461" dy="0">newsletter → post,</tspan><tspan x="461" dy="13">human-gated</tspan></text>
+          <rect class="node-box ne-node" x="445" y="165" width="210" height="70" rx="3"/>
+          <text class="node-sub" x="461" y="186" font-size="10.5">03 · content</text>
+          <text class="node-title" x="461" y="205" font-size="14">Newsletter Engine</text>
+          <text class="node-metric" x="461" y="216" font-size="10.5"><tspan x="461" dy="0">newsletters → article,</tspan><tspan x="461" dy="13">human-reviewed</tspan></text>
+          <g class="ne-badge">
+            <rect x="597" y="173" width="48" height="16" rx="8"/>
+            <text class="node-sub" x="621" y="184.5" font-size="9.5" text-anchor="middle">weekly</text>
+          </g>
         </g>
 
         <!-- Node: Discovery calls (end) -->
         <g>
           <rect class="node-box" x="845" y="115" width="165" height="70" rx="3"/>
-          <text class="node-sub" x="861" y="136" font-size="10.5">03 · outcome</text>
+          <text class="node-sub" x="861" y="136" font-size="10.5">04 · outcome</text>
           <text class="node-title" x="861" y="155" font-size="14">Discovery calls</text>
           <text class="node-metric" x="861" y="173" font-size="11.5">20 booked, warm</text>
         </g>
@@ -644,7 +887,7 @@
           <rect class="node-box base" x="30" y="340" width="980" height="60" rx="3"/>
           <text class="node-sub" x="46" y="362" font-size="10.5">build layer</text>
           <text class="node-title" x="46" y="382" font-size="14">Claude Code</text>
-          <text class="end-label" x="220" y="382">— writes and maintains the scrapers, the send logic, and the approval flow above</text>
+          <text class="end-label" x="220" y="382">writes and maintains the scrapers, the send logic, and the newsletter drafting routine above</text>
         </g>
 
         <!-- flowing particles -->
@@ -733,18 +976,21 @@
       <div class="mock">
         <div class="mock-chrome">
           <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
-          <span class="mock-chrome-label">make.com · content pipeline</span>
+          <span class="mock-chrome-label">claude · newsletter engine</span>
         </div>
-        <div class="mock-body">
-          <div class="cp-flow">
-            <div class="cp-step s1"><span class="cp-icon">✉</span><span>Newsletter received <span class="cp-sub">parsed for post-worthy ideas</span></span></div>
-            <div class="cp-arrow">↓</div>
-            <div class="cp-step s2"><span class="cp-icon">✎</span><span>Draft generated <span class="cp-sub">LinkedIn post · 180 words</span></span></div>
-            <div class="cp-arrow">↓</div>
-            <div class="cp-step s3"><span class="cp-icon">✓</span><span>Approved by admin <span class="cp-sub">scheduled for Tuesday 9am</span></span></div>
+        <div class="mock-body ne-body">
+          <span class="sig-scan"><span class="sig-scan-dot"></span>live</span>
+          <div class="ne-flow">
+            <div class="ne-step s0"><span class="ne-icon">⏱&#xFE0E;</span><span>Thursday 8:35 IST, routine fires</span></div>
+            <div class="ne-step s1"><span class="ne-icon">✉&#xFE0E;</span><span>Label read: 16 issues, 10 newsletters (first run)</span></div>
+            <div class="ne-step s2"><span class="ne-icon">◇&#xFE0E;</span><span>Signal map built, angle chosen</span></div>
+            <div class="ne-step s3"><span class="ne-icon">⚔&#xFE0E;</span><span>Angle stress-tested</span></div>
+            <div class="ne-step s4"><span class="ne-icon">✎&#xFE0E;</span><span>Article drafted, about 2,000 words</span></div>
+            <div class="ne-step s5"><span class="ne-icon">▣&#xFE0E;</span><span>4 images generated and checked</span></div>
+            <div class="ne-step s6 final"><span class="ne-icon">✓&#xFE0E;</span><span>Draft ready, waiting for my review</span></div>
           </div>
         </div>
-        <div class="mock-caption"><b>Content Pipeline</b> — drafts a post from every incoming newsletter and holds it at a human approval gate before it ever goes out.</div>
+        <div class="mock-caption"><b>Newsletter Engine</b> reads the week's newsletters, finds the signal and drafts the article. Nothing is ever posted for me.</div>
       </div>
 
     </div>
@@ -789,17 +1035,126 @@
 
     <div class="case">
       <div>
-        <span class="tag">02 · content</span>
-        <h3>Content Pipeline, via Make.com</h3>
+        <span class="tag">03 · content</span>
+        <h3>Newsletter Engine, via Claude</h3>
       </div>
       <div class="body">
-        <p>Reads incoming newsletters and drafts LinkedIn posts automatically, routed to an admin approval step before anything goes out — content stays warm without needing to be written from scratch each time.</p>
+        <p>Every Thursday it reads a week of my GTM newsletters, maps the themes that keep recurring, picks an angle and argues against it before writing. The result is a 2,000 word article in my voice with every borrowed idea credited and every number sourced, plus four images and a note on what to double-check. It never posts. I review it and publish it myself.</p>
         <div class="metrics">
-          <div class="metric"><b>1</b>approval gate</div>
-          <div class="metric"><b>auto</b>draft generation</div>
+          <div class="metric"><b>16</b>issues read, first run</div>
+          <div class="metric"><b>10</b>newsletters, first run</div>
+          <div class="metric"><b>4</b>images per article</div>
+          <div class="metric"><b>1</b>human gate</div>
         </div>
       </div>
     </div>
+
+    <div class="workflow">
+      <h4>See the workflow</h4>
+      <p class="wf-note">Six screenshots, from the Thursday schedule to the finished draft. Names and addresses are redacted before publishing.</p>
+      <div class="wf-viewer">
+        <div class="wf-tabs" role="tablist" aria-label="Newsletter Engine workflow steps">
+          <button class="wf-tab" role="tab" type="button" id="wf-tab-1" aria-controls="wf-shot-1" aria-selected="true" tabindex="0">Step 1: schedule and collect</button>
+          <button class="wf-tab" role="tab" type="button" id="wf-tab-2" aria-controls="wf-shot-2" aria-selected="false" tabindex="-1">Step 2: signal map</button>
+          <button class="wf-tab" role="tab" type="button" id="wf-tab-3" aria-controls="wf-shot-3" aria-selected="false" tabindex="-1">Step 3: stress test and review notes</button>
+          <button class="wf-tab" role="tab" type="button" id="wf-tab-4" aria-controls="wf-shot-4" aria-selected="false" tabindex="-1">Step 4: article draft</button>
+          <button class="wf-tab" role="tab" type="button" id="wf-tab-5" aria-controls="wf-shot-5" aria-selected="false" tabindex="-1">Step 5: four images</button>
+          <button class="wf-tab" role="tab" type="button" id="wf-tab-6" aria-controls="wf-shot-6" aria-selected="false" tabindex="-1">Step 6: delivery</button>
+        </div>
+        <div class="wf-track" tabindex="0" role="region" aria-label="Newsletter Engine workflow screenshots">
+          <figure class="wf-shot is-active" id="wf-shot-1" data-caption="Step 1: schedule and collect">
+            <div class="mock-chrome">
+              <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+              <span class="mock-chrome-label">newsletter-engine / 01-schedule-and-label.png</span>
+            </div>
+            <div class="wf-media">
+              <button class="wf-open" type="button" aria-label="Enlarge: Step 1: schedule and collect">
+                <img src="workflow/newsletter-engine-01-schedule-and-label.png" width="1600" height="1000" alt="Screenshot of the Newsletter Engine routine, showing the Thursday 8:35 am schedule and the GTM Newsletters label it reads from" loading="lazy" decoding="async">
+              </button>
+              <div class="wf-missing" role="img" aria-label="Screenshot coming for Step 1: schedule and collect">screenshot coming</div>
+            </div>
+            <figcaption><b>Step 1:</b> schedule and collect</figcaption>
+          </figure>
+          <figure class="wf-shot" id="wf-shot-2" data-caption="Step 2: signal map">
+            <div class="mock-chrome">
+              <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+              <span class="mock-chrome-label">newsletter-engine / 02-signal-map.png</span>
+            </div>
+            <div class="wf-media">
+              <button class="wf-open" type="button" aria-label="Enlarge: Step 2: signal map">
+                <img src="workflow/newsletter-engine-02-signal-map.png" width="1600" height="1000" alt="Screenshot of a signal map listing recurring themes, one underrated idea, one disagreement and three candidate angles" loading="lazy" decoding="async">
+              </button>
+              <div class="wf-missing" role="img" aria-label="Screenshot coming for Step 2: signal map">screenshot coming</div>
+            </div>
+            <figcaption><b>Step 2:</b> signal map</figcaption>
+          </figure>
+          <figure class="wf-shot" id="wf-shot-3" data-caption="Step 3: stress test and review notes">
+            <div class="mock-chrome">
+              <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+              <span class="mock-chrome-label">newsletter-engine / 03-stress-test-and-review-notes.png</span>
+            </div>
+            <div class="wf-media">
+              <button class="wf-open" type="button" aria-label="Enlarge: Step 3: stress test and review notes">
+                <img src="workflow/newsletter-engine-03-stress-test-and-review-notes.png" width="1600" height="1000" alt="Screenshot of the stress test arguing against the chosen angle, beside review notes that flag single-source numbers" loading="lazy" decoding="async">
+              </button>
+              <div class="wf-missing" role="img" aria-label="Screenshot coming for Step 3: stress test and review notes">screenshot coming</div>
+            </div>
+            <figcaption><b>Step 3:</b> stress test and review notes</figcaption>
+          </figure>
+          <figure class="wf-shot" id="wf-shot-4" data-caption="Step 4: article draft">
+            <div class="mock-chrome">
+              <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+              <span class="mock-chrome-label">newsletter-engine / 04-article-draft.png</span>
+            </div>
+            <div class="wf-media">
+              <button class="wf-open" type="button" aria-label="Enlarge: Step 4: article draft">
+                <img src="workflow/newsletter-engine-04-article-draft.png" width="1600" height="1000" alt="Screenshot of the drafted article, with headline, standfirst and sections in the author's voice" loading="lazy" decoding="async">
+              </button>
+              <div class="wf-missing" role="img" aria-label="Screenshot coming for Step 4: article draft">screenshot coming</div>
+            </div>
+            <figcaption><b>Step 4:</b> article draft</figcaption>
+          </figure>
+          <figure class="wf-shot" id="wf-shot-5" data-caption="Step 5: four images">
+            <div class="mock-chrome">
+              <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+              <span class="mock-chrome-label">newsletter-engine / 05-four-images.png</span>
+            </div>
+            <div class="wf-media">
+              <button class="wf-open" type="button" aria-label="Enlarge: Step 5: four images">
+                <img src="workflow/newsletter-engine-05-four-images.png" width="1600" height="1000" alt="The four generated images: cover, stat card, framework diagram and quote card" loading="lazy" decoding="async">
+              </button>
+              <div class="wf-missing" role="img" aria-label="Screenshot coming for Step 5: four images">screenshot coming</div>
+            </div>
+            <figcaption><b>Step 5:</b> four images</figcaption>
+          </figure>
+          <figure class="wf-shot" id="wf-shot-6" data-caption="Step 6: delivery">
+            <div class="mock-chrome">
+              <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+              <span class="mock-chrome-label">newsletter-engine / 06-delivery.png</span>
+            </div>
+            <div class="wf-media">
+              <button class="wf-open" type="button" aria-label="Enlarge: Step 6: delivery">
+                <img src="workflow/newsletter-engine-06-delivery.png" width="1600" height="1000" alt="Screenshot of the delivery step: a draft pull request, a private review page and the draft email" loading="lazy" decoding="async">
+              </button>
+              <div class="wf-missing" role="img" aria-label="Screenshot coming for Step 6: delivery">screenshot coming</div>
+            </div>
+            <figcaption><b>Step 6:</b> delivery</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <dialog class="wf-lb" id="wf-lightbox" aria-label="Workflow screenshot viewer">
+      <div class="wf-lb-bar">
+        <span id="wf-lb-cap"></span>
+        <div class="wf-lb-actions">
+          <button type="button" id="wf-lb-prev" aria-label="Previous screenshot">← Prev</button>
+          <button type="button" id="wf-lb-next" aria-label="Next screenshot">Next →</button>
+          <button type="button" id="wf-lb-close" aria-label="Close viewer">Close (Esc)</button>
+        </div>
+      </div>
+      <img id="wf-lb-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </dialog>
   </div>
 </section>
 
@@ -823,7 +1178,7 @@
 <section class="cta">
   <div class="wrap">
     <h2>Want the system running on your GTM instead of mine?</h2>
-    <p>Happy to walk through how the signal engine, outreach, and content pipeline would map onto your pipeline specifically.</p>
+    <p>Happy to walk through how the signal engine, outreach, and newsletter engine would map onto your pipeline specifically.</p>
     <div class="cta-buttons">
       <a class="cta-btn" href="https://calendly.com/markoholics/30min" target="_blank" rel="noopener">Book a call</a>
       <a class="cta-btn secondary" href="mailto:contact@markoholics.com?subject=Let%27s%20talk%20GTM" target="_top">Email me</a>
@@ -835,5 +1190,122 @@
   <div class="wrap">Mohammad H. Rahman · Building GTM engines for AI-native founders</div>
 </footer>
 
+<script>
+(function () {
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var svg = document.querySelector('svg.diagram');
+  function syncMotion() {
+    if (!svg || !svg.pauseAnimations) return;
+    if (mq.matches) svg.pauseAnimations(); else svg.unpauseAnimations();
+  }
+  syncMotion();
+  if (mq.addEventListener) mq.addEventListener('change', syncMotion);
+
+  var wf = document.querySelector('.workflow');
+  if (!wf) return;
+  var shots = Array.prototype.slice.call(wf.querySelectorAll('.wf-shot'));
+  var tabs = Array.prototype.slice.call(wf.querySelectorAll('.wf-tab'));
+  var desk = window.matchMedia('(min-width: 861px)');
+  var current = 0;
+
+  function loaded(i) { return shots[i].classList.contains('is-loaded'); }
+  function missing(i) { return shots[i].classList.contains('is-missing'); }
+
+  shots.forEach(function (shot) {
+    var img = shot.querySelector('img');
+    var btn = shot.querySelector('.wf-open');
+    function ok() { shot.classList.add('is-loaded'); }
+    function miss() { shot.classList.add('is-missing'); btn.disabled = true; btn.setAttribute('tabindex', '-1'); }
+    img.addEventListener('load', ok);
+    img.addEventListener('error', miss);
+    if (img.complete && img.naturalWidth > 0) ok();
+  });
+
+  function select(i, focusTab) {
+    current = i;
+    shots.forEach(function (s, k) { s.classList.toggle('is-active', k === i); });
+    tabs.forEach(function (t, k) {
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      t.setAttribute('tabindex', k === i ? '0' : '-1');
+    });
+    if (focusTab) tabs[i].focus();
+  }
+
+  function applyMode() {
+    shots.forEach(function (s, k) {
+      if (desk.matches) { s.setAttribute('role', 'tabpanel'); s.setAttribute('aria-labelledby', 'wf-tab-' + (k + 1)); }
+      else { s.removeAttribute('role'); s.removeAttribute('aria-labelledby'); }
+    });
+    if (desk.matches) select(current, false);
+  }
+  applyMode();
+  if (desk.addEventListener) desk.addEventListener('change', applyMode);
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(i, false); });
+    t.addEventListener('keydown', function (e) {
+      var n = tabs.length, k = null;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') k = (i + 1) % n;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') k = (i - 1 + n) % n;
+      else if (e.key === 'Home') k = 0;
+      else if (e.key === 'End') k = n - 1;
+      if (k !== null) { e.preventDefault(); select(k, true); }
+    });
+  });
+
+  /* Lightbox: native modal dialog, Esc closes, arrows move, Tab is trapped */
+  var dlg = document.getElementById('wf-lightbox');
+  var lbImg = document.getElementById('wf-lb-img');
+  var lbCap = document.getElementById('wf-lb-cap');
+  var prev = document.getElementById('wf-lb-prev');
+  var next = document.getElementById('wf-lb-next');
+  var close = document.getElementById('wf-lb-close');
+  var opener = null, lbIndex = 0;
+
+  function show(i) {
+    lbIndex = i;
+    var img = shots[i].querySelector('img');
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = shots[i].getAttribute('data-caption');
+  }
+  function step(dir) {
+    var n = shots.length;
+    for (var k = 1; k <= n; k++) {
+      var j = (((lbIndex + dir * k) % n) + n) % n;
+      if (!missing(j)) { show(j); return; }
+    }
+  }
+  lbImg.addEventListener('error', function () {
+    shots[lbIndex].classList.add('is-missing');
+    step(1);
+  });
+  shots.forEach(function (shot, i) {
+    shot.querySelector('.wf-open').addEventListener('click', function (e) {
+      if (!loaded(i) || typeof dlg.showModal !== 'function') return;
+      opener = e.currentTarget;
+      show(i);
+      dlg.showModal();
+      close.focus();
+    });
+  });
+  prev.addEventListener('click', function () { step(-1); });
+  next.addEventListener('click', function () { step(1); });
+  close.addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', function () { if (opener) opener.focus(); });
+  dlg.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    else if (e.key === 'Tab') {
+      var f = [prev, next, close];
+      var idx = f.indexOf(document.activeElement);
+      e.preventDefault();
+      var to = e.shiftKey ? (idx <= 0 ? f.length - 1 : idx - 1) : (idx === f.length - 1 ? 0 : idx + 1);
+      f[to].focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>
